@@ -1,4 +1,4 @@
-# XUI 入站管理脚本
+XUI 入站管理脚本
 
 ## 简介
 
@@ -12,12 +12,58 @@
 
 命令行友好：使用argparse库简化命令行参数输入，提高易用性。
 
-安装与依赖
+# 安装依赖
 
-确保您的环境中已安装Python 3.6+。此外，本脚本依赖于requests库，请通过以下命令安装：
+在不同的Linux服务器上安装Ansible通常涉及以下几个步骤。在大多数情况下，您需要在控制节点（即运行Ansible的机器）上进行安装，而不是在目标服务器上。`ansible_ssh_private_key_file` 是指在控制节点上用于SSH连接到目标服务器的私钥文件路径，这与安装Ansible的过程无关。以下是安装Ansible的一般步骤：
 
-    pip install requests
-    pip3 install requests
+1. 更新系统
+  
+         sudo apt-get update  # 对于Debian/Ubuntu
+         sudo yum update  # 对于CentOS/RHE
+  
+2. **安装Python相关依赖**： 如果您的系统中没有`python3-pip`或`pip3`，您需要先安装它：
+  
+         sudo apt-get install python3-pip  # Debian/Ubuntu
+         sudo yum install python3-pip  # CentOS/RHEL 
+  
+3. 安装requests库
+  
+          pip install requests  # 如果没有pip3使用这条
+          pip3 install requests # 有pip3使用这条
+  
+4. 安装Ansible
+  
+      # Debian/Ubuntu
+         sudo apt-get update
+         sudo apt-get install ansible
+      # CentOS/RHEL
+         sudo yum install -y epel-release
+         sudo yum install -y ansible
+      # 使用 dnf（CentOS 8及以上 / RHEL 8及以上）：
+         sudo dnf install -y ansible
+      # Fedora
+         sudo dnf install ansible
+  
+5. 验证安装
+  
+         ansible --version
+  
+
+# 快速开始
+
+1. 准备一个文本文件（默认为`ips.txt`），每行一个IP地址。
+  
+2. 在命令行中运行脚本，并根据需要调整参数：
+  
+         python ansible_lnventory_hosts.py --help
+  
+
+## 示例命令
+
+* 指定输入文件为`ips.txt`，Ansible用户为`hosts`：
+  
+      python3 ansible_lnventory_hosts.py --input-file=ips.txt --ansible-user=hosts
+  
 
 # 使用指南
 
