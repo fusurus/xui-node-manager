@@ -94,7 +94,6 @@ XUI 入站管理脚本
 
 * 复制下面的文件内容并且保存
   
-
     ---
     - name: Execute script on multiple servers
       hosts: servers
