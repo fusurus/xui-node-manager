@@ -12,6 +12,8 @@ XUI 入站管理脚本
 
 命令行友好：使用argparse库简化命令行参数输入，提高易用性。
 
+* * *
+
 # 安装依赖
 
 在不同的Linux服务器上安装Ansible通常涉及以下几个步骤。在大多数情况下，您需要在控制节点（即运行Ansible的机器）上进行安装，而不是在目标服务器上。`ansible_ssh_private_key_file` 是指在控制节点上用于SSH连接到目标服务器的私钥文件路径，这与安装Ansible的过程无关。以下是安装Ansible的一般步骤：
@@ -48,6 +50,8 @@ XUI 入站管理脚本
   
          ansible --version
   
+  * * *
+  
 
 # 快速开始
 
@@ -64,6 +68,47 @@ XUI 入站管理脚本
   
       python3 ansible_lnventory_hosts.py --input-file=ips.txt --ansible-user=hosts
   
+
+## 修改Ansible配置文件
+
+1. **当前目录下的 `ansible.cfg` 文件**：如果在当前工作目录下有 `ansible.cfg` 文件，Ansible 会使用它。
+  
+2. **用户主目录下的 `.ansible.cfg` 文件**：如果在用户的主目录下有 `.ansible.cfg` 文件，Ansible 会使用它。
+  
+3. **全局配置文件 `/etc/ansible/ansible.cfg`**：这是系统范围内的配置文件，如果以上位置都没有找到配置文件，Ansible 会使用这个文件。
+  
+
+使用命令:
+
+    vim /etc/ansible/ansible.cfg
+    # 把文件中的前面的"#"号删除
+    host_key_checking = False
+
+# 新建ansible的yml文件
+
+* 新建一个名为"playbook.yml"的文件
+  
+
+    touch playbook.yml
+    vim playbook.yml
+
+* 复制下面的文件内容并且保存
+  
+
+    ---
+    - name: Execute script on multiple servers
+      hosts: servers
+      tasks:
+        - name: Run x-ui install script
+          shell: bash -c 'yes | bash <(curl -Ls https://raw.githubusercontent.com/fusurus/x-ui/main/install.sh)'
+          args:
+            executable: /bin/bash
+
+## 执行批量安装x-ui面板
+
+    ansible-playbook -i hosts playbook.yml
+
+* * *
 
 # 使用指南
 
